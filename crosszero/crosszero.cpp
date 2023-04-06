@@ -18,21 +18,42 @@ int main()
 		cout << endl;
 		cout << "\x1b[33m----------\033[0m" << endl;
 	}
-
+	bool validator;
 
 	for (int i = 0; i < 9; i++)
 	{
 		char xo = (i % 2 == 0 ? 'X' : 'O');
-		cout << "\x1b[33mNow is your turn : \033[0m" << xo << endl;
+		cout << "\n\x1b[33mNow is your turn : \033[0m" << xo << endl;
 		int row, col;
+		
 		do {
-			cout << "\x1b[33mEnter num of row (0-2):\033[0m";
+			validator = true;
+			cout << "\n\x1b[33mEnter num of row (0-2):\033[0m";
 			cin >> row;
-			cout << "\x1b[33mEnter num of col (0-2):\033[0m";
+			cout << "\n\x1b[33mEnter num of col (0-2):\033[0m";
 			cin >> col;
-		} while (row < 0 || row > 2 || col < 0 || col > 2 || board[row][col].spot != ' ');
-
-		board[row][col].spot = xo;
+			if (cin.fail())
+			{
+				cout << "\n\x1b[31mInvalid input! Please, enter just  (0-2) nums:\033[0m";
+				cin.clear();
+				cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				validator = false;
+			}
+			else if(row < 0 || row > 2 || col < 0 || col > 2)
+			{
+				cout << "\n\x1b[31mInvalid input! use just 0 or 1 or 2 nums!\033[0m\n" << endl;
+				validator = false;
+			}
+			else if (board[row][col].spot != ' ')
+			{
+				cout << "\n\x1b[31mThis spot is already taken, please choose another one!\033[0m\n" << endl;
+				validator = false;
+			}
+			else
+			{
+			board[row][col].spot = xo;
+			}
+		}while (!validator);
 
 		bool winner = false;
 		for (int j = 0; j < 3; j++)
@@ -58,12 +79,12 @@ int main()
 		}
 		if (winner)
 		{
-			cout << xo << "\x1b[35mWON!!!\033[0m" << endl;
+			cout << xo << "\n\x1b[35m:  WON!!!\033[0m" << endl;
 			break;
 		}
 		if (i == 8)
 		{
-			cout << xo << "\x1b[35mALL OF YOU ARE WINNERS !!!\033[0m" << endl;
+			cout << xo << "\n\x1b[35mALL OF YOU ARE WINNERS !!!\033[0m" << endl;
 			break;
 		}
 		cout << "\x1b[32m-----------\033[0m" << endl;
@@ -79,5 +100,6 @@ int main()
 		}
 	}
 	return 0;
+
 }
 
