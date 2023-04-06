@@ -13,7 +13,7 @@ int main()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			cout << board[i][j].spot << "\x1b[33m | \033[0m";
+			cout << "\x1b[33m" << board[i][j].spot << " | " << "\033[0m";
 		}
 		cout << endl;
 		cout << "\x1b[33m----------\033[0m" << endl;
@@ -34,6 +34,49 @@ int main()
 
 		board[row][col].spot = xo;
 
+		bool winner = false;
+		for (int j = 0; j < 3; j++)
+		{
+			if (board[j][0].spot == xo && board[j][1].spot == xo && board[j][2].spot == xo) 
+			{
+				winner = true;
+				break;
+			}
+			if (board[0][j].spot == xo && board[1][j].spot == xo && board[2][j].spot == xo) 
+			{
+				winner = true;
+				break;
+			}
+		}
+		if (board[0][0].spot == xo && board[1][1].spot == xo && board[2][2].spot == xo)
+		{
+			winner = true;
+		}
+		if (board[0][2].spot == xo && board[1][1].spot == xo && board[2][0].spot == xo)
+		{
+			winner = true;
+		}
+		if (winner)
+		{
+			cout << xo << "\x1b[35mWON!!!\033[0m" << endl;
+			break;
+		}
+		if (i == 8)
+		{
+			cout << xo << "\x1b[35mALL OF YOU ARE WINNERS !!!\033[0m" << endl;
+			break;
+		}
+		cout << "\x1b[32m-----------\033[0m" << endl;
+		for (int j = 0; j < 3; j++)
+		{
+			for (int k = 0; k < 3; k++)
+			{
+				cout << "\x1b[32m" << board[j][k].spot << " | "<< "\033[0m";
+			}
+			cout << endl;
+			cout << "\x1b[32m-----------\033[0m" << endl;
+			
+		}
 	}
 	return 0;
 }
